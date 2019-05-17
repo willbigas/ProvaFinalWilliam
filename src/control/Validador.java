@@ -25,13 +25,13 @@ public class Validador {
             Mensagem.atencao(Texto.DESTINO_OBRIGATORIO);
             return false;
         } else if (viagem.getKmFinal() < viagem.getKmInicial()) {
-            JOptionPane.showMessageDialog(null, "O Km Final é menor que o inicial");
+            Mensagem.atencao(Texto.KM_MENOR_QUE_INICIAL);
             return false;
         } else if (viagem.getKmFinal() <= 0) {
-            JOptionPane.showMessageDialog(null, "O km Final não pode ser negativo ou zerado");
+            Mensagem.atencao(Texto.KM_NEGATIVO_OU_ZERADO);
             return false;
         } else if (viagem.getKmInicial() < viagem.getCarro().getKilometroAtual()) {
-            JOptionPane.showMessageDialog(null, "O km Inicial não pode ser menor do que a kilometragem atual do carro");
+            Mensagem.atencao(Texto.KM_INCIAL_MENOR_KM_CARRO);
             return false;
         }
         return true;

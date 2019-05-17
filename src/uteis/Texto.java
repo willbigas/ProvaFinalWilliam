@@ -15,6 +15,13 @@ public class Texto {
     
     public static final String KM_INICIAL_VAZIO = "O Campo KmInicial está vazio";
     
+    public static final String KM_MENOR_QUE_INICIAL = "O Km Final é menor que o inicial";
+    
+    public static final String KM_NEGATIVO_OU_ZERADO = "O Km Final não pode ser negativo ou zerado";
+    
+    public static final String KM_INCIAL_MENOR_KM_CARRO = "O km Inicial não pode ser menor do que a kilometragem atual do carro";
+    
+    
 
     // Mensagens de Sucesso Padrões
     public static final String SUCESSO_CADASTRAR = "Cadastrado com Sucesso!";
