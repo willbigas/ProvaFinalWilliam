@@ -3,6 +3,8 @@ package control;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.entidades.Viagem;
+import uteis.Mensagem;
+import uteis.Texto;
 
 /**
  *
@@ -20,7 +22,7 @@ public class Validador {
     public static boolean validarViagem(Viagem viagem) {
         System.out.println(viagem);
         if (viagem.getDestino().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Campo Destino é obrigatório");
+            Mensagem.atencao(Texto.DESTINO_OBRIGATORIO);
             return false;
         } else if (viagem.getKmFinal() < viagem.getKmInicial()) {
             JOptionPane.showMessageDialog(null, "O Km Final é menor que o inicial");

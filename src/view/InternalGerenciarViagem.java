@@ -169,11 +169,12 @@ public class InternalGerenciarViagem extends javax.swing.JInternalFrame {
 
     private void btEditarViagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarViagemActionPerformed
         // TODO add your handling code here:
+        gerenciarViagemControl.carregarViagemAction();
     }//GEN-LAST:event_btEditarViagemActionPerformed
 
     private void btSalvarViagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarViagemActionPerformed
         // TODO add your handling code here:
-        gerenciarViagemControl.cadastrarViagemAction();
+      gerenciarViagemControl.gravarAction();
         
         
     }//GEN-LAST:event_btSalvarViagemActionPerformed

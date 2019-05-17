@@ -13,6 +13,8 @@ import model.dao.ViagemDao;
 import model.entidades.Carro;
 import model.entidades.Viagem;
 import model.tablemodels.TableModelViagem;
+import uteis.Mensagem;
+import uteis.Texto;
 import view.FramePrincipal;
 import view.InternalGerenciarViagem;
 
@@ -29,6 +31,7 @@ public class GerenciarViagemControl {
     TableModelViagem tableModelViagem;
     List<Carro> listCarros;
     Viagem viagem;
+    Integer linhaSelecionada;
 
     public GerenciarViagemControl() {
         carroDao = new CarroDao();
@@ -64,15 +67,15 @@ public class GerenciarViagemControl {
 
     public void cadastrarViagemAction() {
         if (!Validador.validarTextField(internalGerenciarViagem.getTfDestino())) {
-            JOptionPane.showMessageDialog(null, "O Campo Destino está vazio ");
+            Mensagem.info(Texto.DESTINO_VAZIO);
             return;
         }
         if (!Validador.validarTextField(internalGerenciarViagem.getTfKmFinal())) {
-            JOptionPane.showMessageDialog(null, "O Campo KmFinal está vazio ");
+            Mensagem.info(Texto.KM_FINAL_VAZIO);
             return;
         }
         if (!Validador.validarTextField(internalGerenciarViagem.getTfKmInicial())) {
-            JOptionPane.showMessageDialog(null, "O Campo KmInicial está vazio ");
+            Mensagem.info(Texto.KM_INICIAL_VAZIO);
             return;
         }
 
@@ -87,6 +90,7 @@ public class GerenciarViagemControl {
         }
 
         Float distanciaPercorrida = Float.valueOf(internalGerenciarViagem.getTfKmFinal().getText()) - Float.valueOf(internalGerenciarViagem.getTfKmInicial().getText());
+        viagem.setDistancia(distanciaPercorrida);
 
         Integer idInserido = viagemDao.cadastrar(viagem);
         if (idInserido != 0) {
@@ -94,19 +98,17 @@ public class GerenciarViagemControl {
             viagem.setId(idInserido);
             tableModelViagem.addRow(viagem);
             limparCampos();
-            JOptionPane.showMessageDialog(null, "Viagem adicionada com sucesso!");
+            Mensagem.info(Texto.SUCESSO_CADASTRAR);
+        } else {
+            Mensagem.info(Texto.ERRO_CADASTRAR);
         }
         viagem = null;
     }
-    
+
     public void removerViagemAction() {
-        int retorno = JOptionPane.showConfirmDialog(null, "deseja excluir o produto ");
+        int retorno = Mensagem.confirmacao(Texto.PERGUNTA_EXCLUIR);
 
         if (retorno == JOptionPane.NO_OPTION) {
-            return;
-        }
-
-        if (retorno == JOptionPane.CANCEL_OPTION) {
             return;
         }
 
@@ -116,19 +118,61 @@ public class GerenciarViagemControl {
             if (deletado) {
                 tableModelViagem.removeRow(internalGerenciarViagem.getTbViagens().getSelectedRow());
                 internalGerenciarViagem.getTbViagens().clearSelection();
-                JOptionPane.showMessageDialog(null, "Sucesso ao Deletar!");
+                Mensagem.info(Texto.SUCESSO_DELETAR);
 
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao deletar");
+                Mensagem.erro(Texto.ERRO_DELETAR);
             }
         }
+        viagem = null;
 
     }
-    
+
+    public void alterarViagemAction() {
+        viagem.setDestino(internalGerenciarViagem.getTfDestino().getText());
+        viagem.setKmInicial(Float.valueOf(internalGerenciarViagem.getTfKmInicial().getText()));
+        viagem.setKmFinal(Float.valueOf(internalGerenciarViagem.getTfKmFinal().getText()));
+        viagem.setCarro((Carro) internalGerenciarViagem.getCbCarros().getSelectedItem());
+
+        if (!Validador.validarViagem(viagem)) {
+            return;
+        }
+
+        Float distanciaPercorrida = Float.valueOf(internalGerenciarViagem.getTfKmFinal().getText()) - Float.valueOf(internalGerenciarViagem.getTfKmInicial().getText());
+        viagem.setDistancia(distanciaPercorrida);
+
+        boolean alterado = viagemDao.alterar(viagem);
+        linhaSelecionada = internalGerenciarViagem.getTbViagens().getSelectedRow();
+        if (alterado) {
+            tableModelViagem.updateRow(linhaSelecionada, viagem);
+            Mensagem.info(Texto.SUCESSO_EDITAR);
+            limparCampos();
+        } else {
+            Mensagem.erro(Texto.ERRO_EDITAR);
+        }
+        viagem = null;
+    }
+
+    public void gravarAction() {
+        if (viagem == null) {
+            cadastrarViagemAction();
+        } else {
+            alterarViagemAction();
+        }
+    }
+
+    public void carregarViagemAction() {
+        viagem = tableModelViagem.getRow(internalGerenciarViagem.getTbViagens().getSelectedRow());
+        internalGerenciarViagem.getTfDestino().setText(viagem.getDestino());
+        internalGerenciarViagem.getTfKmFinal().setText(String.valueOf(viagem.getKmFinal()));
+        internalGerenciarViagem.getTfKmInicial().setText(String.valueOf(viagem.getKmInicial()));
+        internalGerenciarViagem.getCbCarros().getModel().setSelectedItem(viagem.getCarro());
+    }
+
     public void limparCampos() {
         internalGerenciarViagem.getTfDestino().setText("");
-        internalGerenciarViagem.getTfKmFinal().setText("null");
-        internalGerenciarViagem.getTfKmInicial().setText("null");
+        internalGerenciarViagem.getTfKmFinal().setText("");
+        internalGerenciarViagem.getTfKmInicial().setText("");
         internalGerenciarViagem.getCbCarros().setSelectedIndex(0);
         internalGerenciarViagem.getTbViagens().clearSelection();
     }

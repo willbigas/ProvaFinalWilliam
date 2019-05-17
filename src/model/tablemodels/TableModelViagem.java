@@ -106,7 +106,7 @@ public class TableModelViagem extends AbstractTableModel implements TableModelI<
      * @param coluna
      */
     @Override
-    public void setValueAt(Object valor, int linha, int coluna) {
+public void setValueAt(Object valor, int linha, int coluna) {
         Viagem viagem = listViagem.get(linha);
         switch (coluna) {
             case Constantes.CODIGO:

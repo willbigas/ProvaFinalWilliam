@@ -26,3 +26,22 @@ CREATE TABLE IF NOT EXISTS viagem (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+
+USE frota_viagens;
+INSERT INTO 
+	carro(modelo, km_atual, placa, ativo) 
+VALUES
+	('Palio', 33000, 'PAC-1234', 1),
+	('Corsa', 110000, 'FOG-1234', 1),
+	('Prisma', 17000, 'MIB-1234', 1),
+	('Clio', 65319, 'MAC-1234', 1),
+	('Sandeiro', 44030, 'BIG-1234', 1),
+	('Gol', 117978, 'BOB-1234', 1),
+	('Siena', 12000, 'POO-1234', 0);
+
+
+select * from viagem;
+
+select * from carro

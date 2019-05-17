@@ -24,7 +24,7 @@ public class ViagemDao extends Dao implements DaoI<Viagem> {
     @Override
     public List<Viagem> listar() {
         String sql = "SELECT "
-                + "v.id , v.destino, v.km_inicial, v.km_final, (v.km_final-v.km_inicial) as distancia, c.id, c.modelo, c.placa, c.km_atual "
+                + "v.id , v.destino, v.km_inicial, v.km_final, (v.km_final - v.km_inicial) as distancia, c.id, c.modelo, c.placa, c.km_atual "
                 + "FROM "
                 + "viagem v "
                 + "INNER JOIN "
@@ -100,7 +100,7 @@ public class ViagemDao extends Dao implements DaoI<Viagem> {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             stmt.setString(1, obj.getDestino());
             stmt.setFloat(2, obj.getKmInicial());
-            stmt.setFloat(2, obj.getKmFinal());
+            stmt.setFloat(3, obj.getKmFinal());
             stmt.setInt(4, obj.getCarro().getId());
             stmt.setInt(5, obj.getId());
             return stmt.executeUpdate() > 0;
