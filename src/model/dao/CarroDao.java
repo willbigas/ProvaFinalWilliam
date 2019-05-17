@@ -26,7 +26,7 @@ public class CarroDao extends Dao implements DaoI<Carro> {
 
     @Override
     public List<Carro> listar() {
-        String sql = "SELECT id, modelo , km_atual, placa , ativo FROM carro ORDER BY id ASC ";
+        String sql = "SELECT id, modelo , km_atual, placa , ativo FROM carro where ativo = 1 ORDER BY id ASC ";
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             ResultSet res = stmt.executeQuery();

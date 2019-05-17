@@ -30,7 +30,7 @@ public class ViagemDao extends Dao implements DaoI<Viagem> {
                 + "INNER JOIN "
                 + "carro c ON c.id = v.carro_id "
                 + "WHERE "
-                + "v.ativo = c.ativo "
+                + "v.ativo = 1 "
                 + "ORDER BY "
                 + "v.id DESC ";
 
